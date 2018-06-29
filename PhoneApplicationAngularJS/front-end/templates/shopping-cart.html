@@ -1,0 +1,14 @@
+<p>Shopping Cart</p>
+
+<div style="color: red;" ng-if="cart.length === 0" >Cart is empty!</div>
+
+<ul>
+
+    <li ng-repeat="cartItem in cart">
+
+        <span ng-bind="cartItem.name"></span>
+        <span ng-bind-template="Amount: ({{cartItem.amount}})"></span>
+        <span ng-click="RemoveItem($index)" style="color: red; font-size: 18px; cursor: pointer">X</span>
+
+    </li>
+</ul>

@@ -1,0 +1,22 @@
+{
+  "name": "hw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "angular": "^1.7.2",
+    "angular-cookies": "^1.7.2",
+    "angular-route": "^1.7.2",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.8",
+    "webpack-command": "^0.3.0",
+    "webpack-dev-server": "^3.1.4"
+  }
+}
