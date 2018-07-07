@@ -6,7 +6,7 @@ export default class ShoppingCartComponent extends React.Component {
 
         super(props);
 
-        this.state = { 'cart': [] };
+        this.state = { 'cart': this.props.cart };
 
     }//constructor
 
@@ -41,11 +41,5 @@ export default class ShoppingCartComponent extends React.Component {
         </div>;
 
     }//render
-
-    addPhoneToCart(phone){
-
-        console.log(phone);
-
-    }//addPhoneToCart
 
 }//ShoppingCartComponent

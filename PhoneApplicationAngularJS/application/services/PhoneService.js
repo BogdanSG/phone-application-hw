@@ -2,16 +2,19 @@
 
 export default class PhoneService{
 
-    constructor($http){
+    constructor( $http ){
 
         this.$http = $http;
+        this.searchObject = {
+            'searchString': '',
+            'sortString': 'age'
+        };
 
-    }//constructor
+    }
 
-    async getPhones(url){
+    async getPhones( url ){
 
         try{
-
             let result = await this.$http.get( url );
 
             return result.data;
@@ -23,24 +26,27 @@ export default class PhoneService{
             return [];
 
         }//catch
+    }
 
-    }//getPhones
+    getSearchObject(){
+        return this.searchObject;
+    }//getSearchObject
 
-    async getSinglePhone(url){
+    async getSinglePhone( url ){
 
         try{
+            let result = await this.$http.get( url );
 
-            let result = await this.$http.get(url);
             return result.data;
 
         }//try
         catch(ex){
 
-            console.log("Exception: getPhones" , ex);
+            console.log("Exception: getSinglePhone: " , ex);
             return null;
 
         }//catch
 
-    }//getSinglePhone
+    }
 
-}//PhoneService
+}

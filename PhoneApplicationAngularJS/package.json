@@ -1,22 +1,30 @@
 {
-  "name": "hw",
+  "name": "angular-phones-application-psu-1-31",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ovsyanikov94/angular-phones-application-PSU-1-31.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ovsyanikov94/angular-phones-application-PSU-1-31/issues"
+  },
+  "homepage": "https://github.com/ovsyanikov94/angular-phones-application-PSU-1-31#readme",
   "devDependencies": {
     "angular": "^1.7.2",
     "angular-cookies": "^1.7.2",
+    "angular-local-storage": "^0.7.1",
     "angular-route": "^1.7.2",
     "webpack": "^4.12.2",
     "webpack-cli": "^3.0.8",
-    "webpack-command": "^0.3.0",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-command": "^0.3.1"
   }
 }

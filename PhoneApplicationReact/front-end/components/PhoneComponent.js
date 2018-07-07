@@ -50,6 +50,11 @@ export default class PhoneComponent extends React.Component {
 
     addPhoneToCart(phone){
 
+        this.props.addToCart({
+            'id' : phone.id,
+            'amount' : 1,
+            'name' : phone.name,
+        });
 
     }//addPhoneToCart
 

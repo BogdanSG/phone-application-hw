@@ -31,6 +31,9 @@ module.exports = {
     watch: true,
     devServer:{
         hot: true,
+        inline: true,
+        contentBase: path.resolve(__dirname, './public'),
+        historyApiFallback: true,
     }
 
 

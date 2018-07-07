@@ -4,12 +4,13 @@ import SearchSortComponent from './SearchSortComponent';
 import ShoppingCartComponent from './ShoppingCartComponent';
 import CatalogueComponent from './CatalogueComponent';
 import PhoneComponent from './PhoneComponent';
+import  { connect } from 'react-redux';
 
 const Router = ReactRouterDOM.BrowserRouter;
 const Route = ReactRouterDOM.Route;
 const Switch = ReactRouterDOM.Switch;
 
-export default class HomeComponent extends React.Component{
+class HomeComponent extends React.Component{
 
     constructor(props){
 
@@ -39,7 +40,7 @@ export default class HomeComponent extends React.Component{
                         <Router>
                             <Switch>
                                 <Route exact path="/PhoneApplicationReact/public/" component={CatalogueComponent}/>
-                                <Route exact path="/PhoneApplicationReact/public/single-phone/:id" component={PhoneComponent}/>
+                                <Route exact path="/PhoneApplicationReact/public/single-phone/:id" component={CatalogueComponent}/>
                             </Switch>
                         </Router>
 
@@ -52,3 +53,21 @@ export default class HomeComponent extends React.Component{
     }//render
 
 }//HomeComponent
+
+const StateToProps = (state) => {
+
+    return {
+        cart: state
+    }
+
+};
+
+const DispatchToProps = (dispatch) => {
+
+    return{
+        addToCart: (phone) => dispatch({ type: 'ADD_TO_CART', phone})
+    }
+
+};
+
+export default connect(StateToProps, DispatchToProps)(HomeComponent);

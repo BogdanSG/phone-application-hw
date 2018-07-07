@@ -1,24 +1,16 @@
-'use strict';
+"use strict";
 
 const path = require('path');
 
-
 module.exports = {
 
-    mode: "production",
-    entry: {
-        fileName: "./front-end/app.js"
-    },
+    mode: "development",
+    devtool: "source-map",
+    entry: "./application/app.js",
     output: {
         filename: "index.js",
-        path: path.resolve(__dirname , "public/js"),
-        publicPath: "/public/"
+        path: path.resolve(__dirname , "public/js")
     },
-    devtool: "source-map",
-    watch: true,
-    devServer:{
-        hot: true,
-    }
-
+    watch: true
 
 };

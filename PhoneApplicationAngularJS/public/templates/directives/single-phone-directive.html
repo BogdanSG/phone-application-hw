@@ -1,0 +1,19 @@
+<div>
+    <div>
+
+        <img class="phone" ng-src="{{thumbnail}}">
+
+        <button class="btn btn-success" ng-click="addPhoneToCart(phone)" >Add to basket</button>
+
+        <h1 ng-bind="phone.name"></h1>
+
+        <p ng-bind="phone.description"></p>
+
+        <ul id="PhonesOwlCarousel" style="list-style-type: none" class="owl-theme owl-carousel">
+            <li ng-click="setThumbnail(photo)" ng-repeat="photo in phone.images">
+                <img ng-src="{{photo}}">
+            </li>
+        </ul>
+
+    </div>
+</div>

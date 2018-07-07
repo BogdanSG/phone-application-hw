@@ -4,6 +4,11 @@ body {
   padding-top: 20px;
 }
 
+.navbar-app{
+
+  margin: 10px
+
+}
 
 .phone-images {
   background-color: white;

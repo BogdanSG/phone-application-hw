@@ -2,24 +2,66 @@
 <html ng-app="PhoneApplication" lang="en">
 <head>
     <meta charset="UTF-8">
-    <base href="/PhoneApplicationAngularJS/public/" >
+    <base href="/angular-phones-application-PSU-1-31/public/" >
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/app.css">
 
-    <script src="../node_modules/angular/angular.min.js" ></script>
-    <script src="../node_modules/angular-route/angular-route.min.js" ></script>
-    <script src="../node_modules/angular-cookies/angular-cookies.min.js" ></script>
+    <link rel="stylesheet" href="../bower_components/owl.carousel/dist/assets/owl.carousel.css">
+    <link rel="stylesheet" href="../bower_components/owl.carousel/dist/assets/owl.theme.default.css">
 
-    <script src="js/index.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js" ></script>
+
+    <script src="../bower_components/owl.carousel/dist/owl.carousel.js" ></script>
+
+    <script src="../node_modules/angular/angular.js" ></script>
+    <script src="../node_modules/angular-route/angular-route.js" ></script>
+    <script src="../node_modules/angular-cookies/angular-cookies.js" ></script>
+    <script src="../node_modules/angular-local-storage/dist/angular-local-storage.js" ></script>
+
+
+    <script src="js/index.js" ></script>
 
     <title> Phones - application. AngularJS </title>
 
 </head>
 <body>
-
-
 <div>
+
+    <nav class="navbar navbar-default navbar-app">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" ng-href="/angular-phones-application-PSU-1-31/public/">Home</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a ng-href="/angular-phones-application-PSU-1-31/public/cart">Cart</a></li>
+                </ul>
+                <div ng-controller="ExampleController">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input ng-model="searchObject.searchString" type="text" class="form-control" placeholder="Search">
+                        </div>
+                    </form>
+                    <div>
+                        <ul class="nav navbar-nav">
+                            <li style="margin-top: 17px">Sort by:</li>
+                            <li class="form-group" style="margin-left: 10px; margin-top: 9px">
+                                <select ng-model="searchObject.sortString" class="form-control">
+                                    <option value="age">Newest</option>
+                                    <option value="name">Alphabetical</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
     <div>
         <div class="container-fluid" >
 
@@ -28,11 +70,29 @@
                 <div class="col-md-2">
                     <!--Sidebar content-->
 
-                    <div searth-sort ng-controller="SearchSortController"></div>
+                    <section ng-controller="CartController" >
+                        <p>Shopping Cart</p>
+                        <div ng-if="cart.length !== 0" >
+                            <button type="button" class="btn btn-danger" ng-click="ClearCart()" >Clear cart</button>
+                        </div>
+                        <div style="color: red;" ng-if="cart.length === 0" >Cart is empty!</div>
 
-                    <div shopping-cart ng-controller="CartController"></div>
+                        <ul>
+
+                            <li ng-repeat="cartItem in cart">
+
+                                <span ng-bind="cartItem.name"></span>
+                                <span ng-bind-template="Amount: ({{cartItem.amount}})"></span>
+                                <span ng-click="RemoveItem($index)" style="color: red; font-size: 18px; cursor: pointer">X</span>
+
+                            </li>
+                        </ul>
+                    </section>
+
 
                 </div>
+
+                <div ></div>
 
                 <div ng-view class="col-md-10"></div>
 
