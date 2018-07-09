@@ -14,41 +14,69 @@ export default function PhonesList(){
         templateUrl: 'templates/directives/phones-list.html',
         controller: ['$scope' , 'CartService', function ( $scope, CartService ){
 
-            $scope.PlusOne = phone => {
+            if($scope.cartPhones){
 
-                let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
+                $scope.phones = CartService.getFullPhones($scope.phones);
 
-                cartPhone.amount = phone.amount = ++phone.amount;
+                $scope.PlusOne = phoneIndex => {
 
-                CartService.setCartToCookie();
-
-            };
-
-            $scope.MinusOne = phone => {
-
-                if(phone.amount > 1){
+                    let phone = $scope.phones[phoneIndex];
 
                     let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
 
-                    cartPhone.amount = phone.amount = --phone.amount;
+                    cartPhone.amount = phone.amount = ++phone.amount;
 
                     CartService.setCartToCookie();
 
-                }//if
+                };
 
-            };
+                $scope.MinusOne = phoneIndex => {
 
-            $scope.deletePhone = phone => {
+                    if(phone.amount > 1){
 
-                let cartPhoneIndex = $scope.cartPhones.findIndex(elem => {return elem.id === phone.id });
+                        let phone = $scope.phones[phoneIndex];
 
-                let phoneIndex = $scope.phones.findIndex(elem => {return elem.id === phone.id });
+                        let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
 
-                $scope.phones.splice(0, 1);
+                        cartPhone.amount = phone.amount = --phone.amount;
 
-                CartService.removePhone(cartPhoneIndex);
+                        CartService.setCartToCookie();
 
-            };
+                    }//if
+
+                };
+
+                CartService.onRemovePhone(phone => {
+
+                    for(let i = 0; i < $scope.phones.length; i++){
+
+                        if($scope.phones[i].id === phone.id){
+
+                            $scope.phones.splice(i, 1);
+
+                            return;
+
+                        }//if
+
+                    }//for
+
+                });
+
+                CartService.onClearCart(() => {
+
+                    $scope.phones = [];
+
+                });
+
+                $scope.deletePhone = phoneIndex => {
+
+                    $scope.phones.splice(phoneIndex, 1);
+
+                    CartService.removePhone(phoneIndex);
+
+                };
+
+            }//if
 
         }]
 

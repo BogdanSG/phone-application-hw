@@ -45,7 +45,7 @@ angular.module('PhoneApplication.controllers')
     );
 
 angular.module('PhoneApplication.services')
-    .service( 'CartService'  ,[ 'localStorageService' , CartService ]);
+    .service( 'CartService'  ,[ 'localStorageService', 'PhoneService', CartService ]);
 
 angular.module('PhoneApplication.services')
     .service( 'PhoneService'  , [ '$http' , PhoneService ]);

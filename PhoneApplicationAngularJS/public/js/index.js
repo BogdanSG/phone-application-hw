@@ -151,7 +151,7 @@ angular.module('PhoneApplication.controllers')
     );
 
 angular.module('PhoneApplication.services')
-    .service( 'CartService'  ,[ 'localStorageService' , _services_CartService__WEBPACK_IMPORTED_MODULE_3__["default"] ]);
+    .service( 'CartService'  ,[ 'localStorageService', 'PhoneService', _services_CartService__WEBPACK_IMPORTED_MODULE_3__["default"] ]);
 
 angular.module('PhoneApplication.services')
     .service( 'PhoneService'  , [ '$http' , _services_PhoneService__WEBPACK_IMPORTED_MODULE_4__["default"] ]);
@@ -289,29 +289,7 @@ class CatalogueController{
 
         $scope.phones = phones;
 
-        $scope.cartPhones = false;
-
-        if(cart){
-
-            $scope.cartPhones = cart;
-
-            $scope.phones = $scope.phones.filter(phone => {
-
-                return cart.some( p => {
-                    return p.id === phone.id;
-                } );
-
-            });
-
-            //amount
-
-            $scope.phones.forEach(phone => {
-
-                phone.amount = cart.find(elem => { return elem.id === phone.id }).amount;
-
-            });
-
-        }//if
+        $scope.cartPhones = cart;
 
     }//constructor
 
@@ -370,41 +348,69 @@ function PhonesList(){
         templateUrl: 'templates/directives/phones-list.html',
         controller: ['$scope' , 'CartService', function ( $scope, CartService ){
 
-            $scope.PlusOne = phone => {
+            if($scope.cartPhones){
 
-                let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
+                $scope.phones = CartService.getFullPhones($scope.phones);
 
-                cartPhone.amount = phone.amount = ++phone.amount;
+                $scope.PlusOne = phoneIndex => {
 
-                CartService.setCartToCookie();
-
-            };
-
-            $scope.MinusOne = phone => {
-
-                if(phone.amount > 1){
+                    let phone = $scope.phones[phoneIndex];
 
                     let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
 
-                    cartPhone.amount = phone.amount = --phone.amount;
+                    cartPhone.amount = phone.amount = ++phone.amount;
 
                     CartService.setCartToCookie();
 
-                }//if
+                };
 
-            };
+                $scope.MinusOne = phoneIndex => {
 
-            $scope.deletePhone = phone => {
+                    if(phone.amount > 1){
 
-                let cartPhoneIndex = $scope.cartPhones.findIndex(elem => {return elem.id === phone.id });
+                        let phone = $scope.phones[phoneIndex];
 
-                let phoneIndex = $scope.phones.findIndex(elem => {return elem.id === phone.id });
+                        let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
 
-                $scope.phones.splice(0, 1);
+                        cartPhone.amount = phone.amount = --phone.amount;
 
-                CartService.removePhone(cartPhoneIndex);
+                        CartService.setCartToCookie();
 
-            };
+                    }//if
+
+                };
+
+                CartService.onRemovePhone(phone => {
+
+                    for(let i = 0; i < $scope.phones.length; i++){
+
+                        if($scope.phones[i].id === phone.id){
+
+                            $scope.phones.splice(i, 1);
+
+                            return;
+
+                        }//if
+
+                    }//for
+
+                });
+
+                CartService.onClearCart(() => {
+
+                    $scope.phones = [];
+
+                });
+
+                $scope.deletePhone = phoneIndex => {
+
+                    $scope.phones.splice(phoneIndex, 1);
+
+                    CartService.removePhone(phoneIndex);
+
+                };
+
+            }//if
 
         }]
 
@@ -571,7 +577,7 @@ __webpack_require__.r(__webpack_exports__);
 
 class CartService{
 
-    constructor( localStorageService ){
+    constructor( localStorageService, PhoneService){
 
        if(localStorageService.get('cart')){
            this.cart = localStorageService.get('cart');
@@ -581,6 +587,8 @@ class CartService{
        }//else
 
        this.localStorageService = localStorageService;
+
+       this.PhoneService = PhoneService;
 
     }//constructor
 
@@ -619,6 +627,10 @@ class CartService{
 
         this.localStorageService.set( 'cart' , this.cart );
 
+        this.removePhoneCallBack = phone => {};
+
+        this.onClearCartCallBack = () => {};
+
     }//addPhone
 
     _getSimplePhone( phone ){
@@ -631,10 +643,35 @@ class CartService{
 
     }//_getSimplePhone
 
+    getFullPhones(phones){
+
+        let fullPhones;
+
+        fullPhones = phones.filter(phone => {
+
+            return this.cart.some( p => {
+                return p.id === phone.id;
+            } );
+
+        });
+
+        //amount
+
+        fullPhones.forEach(phone => {
+
+            phone.amount = this.cart.find(elem => { return elem.id === phone.id }).amount;
+
+        });
+
+        return fullPhones;
+
+    }//getFullPhones
+
     clearCart(){
 
         this.localStorageService.clearAll();
         this.cart.length = 0;
+        this.onClearCartCallBack();
 
     }//clearCart
 
@@ -644,14 +681,29 @@ class CartService{
 
     }//setCartToCookie
 
+    onRemovePhone(callback){
+
+        this.removePhoneCallBack = callback;
+
+    }//callback
+
+    onClearCart(callback){
+
+        this.onClearCartCallBack = callback;
+
+    }//onClearCart
+
     removePhone( index ){
 
-        this.cart.splice( index , 1 );
+        let phone = this.cart.splice( index , 1 )
+
+        this.removePhoneCallBack(phone[0]);
+
         this.localStorageService.set( 'cart' , this.cart );
 
     }//removePhone
 
-}
+}//CartService
 
 
 /***/ }),

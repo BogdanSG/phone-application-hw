@@ -3,7 +3,7 @@
 
 export default class CartService{
 
-    constructor( localStorageService ){
+    constructor( localStorageService, PhoneService){
 
        if(localStorageService.get('cart')){
            this.cart = localStorageService.get('cart');
@@ -13,6 +13,8 @@ export default class CartService{
        }//else
 
        this.localStorageService = localStorageService;
+
+       this.PhoneService = PhoneService;
 
     }//constructor
 
@@ -51,6 +53,10 @@ export default class CartService{
 
         this.localStorageService.set( 'cart' , this.cart );
 
+        this.removePhoneCallBack = phone => {};
+
+        this.onClearCartCallBack = () => {};
+
     }//addPhone
 
     _getSimplePhone( phone ){
@@ -63,10 +69,35 @@ export default class CartService{
 
     }//_getSimplePhone
 
+    getFullPhones(phones){
+
+        let fullPhones;
+
+        fullPhones = phones.filter(phone => {
+
+            return this.cart.some( p => {
+                return p.id === phone.id;
+            } );
+
+        });
+
+        //amount
+
+        fullPhones.forEach(phone => {
+
+            phone.amount = this.cart.find(elem => { return elem.id === phone.id }).amount;
+
+        });
+
+        return fullPhones;
+
+    }//getFullPhones
+
     clearCart(){
 
         this.localStorageService.clearAll();
         this.cart.length = 0;
+        this.onClearCartCallBack();
 
     }//clearCart
 
@@ -76,11 +107,26 @@ export default class CartService{
 
     }//setCartToCookie
 
+    onRemovePhone(callback){
+
+        this.removePhoneCallBack = callback;
+
+    }//callback
+
+    onClearCart(callback){
+
+        this.onClearCartCallBack = callback;
+
+    }//onClearCart
+
     removePhone( index ){
 
-        this.cart.splice( index , 1 );
+        let phone = this.cart.splice( index , 1 )
+
+        this.removePhoneCallBack(phone[0]);
+
         this.localStorageService.set( 'cart' , this.cart );
 
     }//removePhone
 
-}
+}//CartService

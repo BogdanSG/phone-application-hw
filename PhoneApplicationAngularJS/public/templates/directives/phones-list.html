@@ -5,9 +5,9 @@
     <a ng-href="single-phone/{{phone.id}}" ng-bind="phone.name"></a>
     <p ng-bind="phone.snippet" ></p>
     <div ng-if="cartPhones">
-        <button type="button" class="btn btn-success" ng-click="MinusOne(phone)">-</button>
+        <button type="button" class="btn btn-success" ng-click="MinusOne($index)">-</button>
         <button type="button" class="btn btn-primary"><span class="badge" ng-bind="phone.amount"></span></button>
-        <button type="button" class="btn btn-success" ng-click="PlusOne(phone)">+</button>
-        <button type="button" class="btn btn-danger" ng-click="deletePhone(phone)">Delete</button>
+        <button type="button" class="btn btn-success" ng-click="PlusOne($index)">+</button>
+        <button type="button" class="btn btn-danger" ng-click="deletePhone($index)">Delete</button>
     </div>
 </li>
