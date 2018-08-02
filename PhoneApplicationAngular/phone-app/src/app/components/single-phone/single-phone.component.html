@@ -1,0 +1,19 @@
+<div>
+  <div *ngIf="phone">
+
+    <img class="phone" src="/assets/{{thumbnail}}">
+
+    <button class="btn btn-success" (click)="addPhoneToCart()">Add to basket</button>
+
+    <h1>{{phone.name}}</h1>
+
+    <p>{{phone.description}}</p>
+
+    <ul id="PhonesOwlCarousel" style="list-style-type: none" class="owl-theme owl-carousel">
+      <li *ngFor="let photo of phone.images" (click)="setThumbnail(photo)">
+        <img src="/assets/{{photo}}">
+      </li>
+    </ul>
+
+  </div>
+</div>

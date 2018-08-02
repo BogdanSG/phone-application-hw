@@ -1,0 +1,13 @@
+<div class="col-md-10">
+
+  <ul *ngFor="let phone of phones" class="phones">
+    <li class="thumbnail">
+      <a [routerLink]="['phone', phone.id]" class="thumb">
+        <img alt="{{phone.name}}" src="assets/{{phone.imageUrl}}">
+      </a>
+      <a [routerLink]="['phone', phone.id]">{{phone.name}}</a>
+      <p>{{phone.snippet}}</p>
+    </li>
+  </ul>
+
+</div>
