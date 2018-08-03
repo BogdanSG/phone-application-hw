@@ -1,12 +1,18 @@
 <div class="col-md-10">
 
-  <ul *ngFor="let phone of phones" class="phones">
+  <ul *ngFor="let phone of phones | searchPhones: searchObject.searchString | sortPhonese: searchObject.sortString; let i = index" class="phones">
     <li class="thumbnail">
       <a [routerLink]="['phone', phone.id]" class="thumb">
         <img alt="{{phone.name}}" src="assets/{{phone.imageUrl}}">
       </a>
       <a [routerLink]="['phone', phone.id]">{{phone.name}}</a>
       <p>{{phone.snippet}}</p>
+      <div *ngIf="cartPhones">
+        <button type="button" class="btn btn-success" (click)="MinusOne(i)">-</button>
+        <button type="button" class="btn btn-primary"><span class="badge">{{phone.amount}}</span></button>
+        <button type="button" class="btn btn-success" (click)="PlusOne(i)">+</button>
+        <button type="button" class="btn btn-danger" (click)="deletePhone(i)">Delete</button>
+      </div>
     </li>
   </ul>
 

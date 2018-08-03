@@ -6,6 +6,7 @@ import {SinglePhoneComponent} from "./components/single-phone/single-phone.compo
 
 const routes: Routes = [
   { path: '', component: CatalogComponent},
+  { path: 'cart', component: CatalogComponent},
   { path: 'phone/:phoneID', component: SinglePhoneComponent },
 ];
 

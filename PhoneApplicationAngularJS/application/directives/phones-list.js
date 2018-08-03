@@ -32,9 +32,9 @@ export default function PhonesList(){
 
                 $scope.MinusOne = phoneIndex => {
 
-                    if(phone.amount > 1){
+                    let phone = $scope.phones[phoneIndex];
 
-                        let phone = $scope.phones[phoneIndex];
+                    if(phone.amount > 1){
 
                         let cartPhone = $scope.cartPhones.find(elem => {return elem.id === phone.id });
 

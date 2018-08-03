@@ -7,7 +7,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CatalogService {
 
+  searchObject: any;
+
   constructor(private http: HttpClient) {
+
+    this.searchObject = {
+      'searchString': '',
+      'sortString': 'age'
+    };
 
   }//constructor
 
@@ -22,5 +29,11 @@ export class CatalogService {
     return this.http.get(url);
 
   }//getPhone
+
+  getSearchObject(){
+
+    return this.searchObject;
+
+  }//getSearchObject
 
 }//CatalogService

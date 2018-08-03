@@ -1,0 +1,19 @@
+<section>
+  <p>{{title}}</p>
+  <div *ngIf="cart.length !== 0" >
+    <button type="button" class="btn btn-danger" (click)="ClearCart()" >{{clearText}}</button>
+  </div>
+  <div style="color: red;" *ngIf="cart.length === 0" >{{emptyText}}</div>
+
+  <ul>
+
+    <li *ngFor="let cartItem of cart; let i = index">
+
+      <span>{{cartItem.name}}</span>
+      <span>Amount: ({{cartItem.amount}})</span>
+      <span (click)="RemoveItem(i)" style="color: red; font-size: 18px; cursor: pointer">X</span>
+
+    </li>
+
+  </ul>
+</section>

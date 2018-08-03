@@ -12,39 +12,7 @@
 
 <div>
 
-  <nav class="navbar navbar-default navbar-app">
-    <div class="container-fluid">
-
-      <div class="navbar-header">
-        <a class="navbar-brand" routerLink="/">Home</a>
-      </div>
-
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li><a routerLink="/">Cart</a></li>
-        </ul>
-        <div ng-controller="ExampleController">
-          <form class="navbar-form navbar-left">
-            <div class="form-group">
-              <input ng-model="searchObject.searchString" type="text" class="form-control" placeholder="Search">
-            </div>
-          </form>
-          <div>
-            <ul class="nav navbar-nav">
-              <li style="margin-top: 17px">Sort by:</li>
-              <li class="form-group" style="margin-left: 10px; margin-top: 9px">
-                <select ng-model="searchObject.sortString" class="form-control">
-                  <option value="age">Newest</option>
-                  <option value="name">Alphabetical</option>
-                </select>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </nav>
+  <app-header></app-header>
 
   <div>
     <div class="container-fluid" >
@@ -54,29 +22,9 @@
         <div class="col-md-2">
           <!--Sidebar content-->
 
-          <section ng-controller="CartController" >
-            <p>Shopping Cart</p>
-            <div ng-if="cart.length !== 0" >
-              <button type="button" class="btn btn-danger" ng-click="ClearCart()" >Clear cart</button>
-            </div>
-            <!--<div style="color: red;" ng-if="cart.length === 0" >Cart is empty!</div>-->
-
-            <!--<ul>-->
-
-              <!--<li ng-repeat="cartItem in cart">-->
-
-                <!--<span ng-bind="cartItem.name"></span>-->
-                <!--<span ng-bind-template="Amount: ({{cartItem.amount}})"></span>-->
-                <!--<span ng-click="RemoveItem($index)" style="color: red; font-size: 18px; cursor: pointer">X</span>-->
-
-              <!--</li>-->
-            <!--</ul>-->
-          </section>
-
+          <app-cart></app-cart>
 
         </div>
-
-        <div ></div>
 
         <router-outlet></router-outlet>
 
